@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+build/
+dist/
+release/
+*.spec
+third_party/ooz/build/
+third_party/ooz/*.obj
+third_party/ooz/*.lib
+third_party/ooz/*.exp
+third_party/ooz/ooz.dll
+# never commit save files
+*.sav
