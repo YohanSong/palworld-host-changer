@@ -12,7 +12,7 @@
 
 ## 다운로드
 
-[Releases](../../releases/latest)에서 `PalworldHostChanger_v1.0.0.zip` 받아 **압축을 풀고** `PalworldHostChanger.bat` 더블클릭.
+[Releases](https://github.com/YohanSong/palworld-host-changer/releases/latest)에서 `PalworldHostChanger_v1.0.0.zip` 받아 **압축을 풀고** `PalworldHostChanger.bat` 더블클릭.
 파이썬 설치 필요 없음 — 공식 파이썬 런타임(PSF 서명)이 `runtime\`에 같이 들어있고, `app\`에는 이 도구의 소스(.py)가 그대로 있다.
 
 > exe가 아닌 이유: PyInstaller로 만든 exe는 윈도우 디펜더가 `Trojan:Win32/Wacatac!ml`로 오탐한다. 그래서 서명된 공식 런타임 + 소스 형태로 배포한다. [VirusTotal 검사 결과](https://www.virustotal.com/gui/file/ef4a1b3199a717c680434406c4a62e379bb0f4c98f9df6a56fc59c7fbc5758b1)
@@ -63,7 +63,7 @@
 
 ## 주의
 
-- **검증 범위**: Palworld v1.0.3 세이브(2026-09), 4인 co-op 월드 1개에서 호스트 2회 이관 + 캐릭터 복원 + 맵 복원까지 실사용했다. 이후 패치(v1.0.4, v1.0.5)에서 문제가 생기면 [Issues](../../issues)로 알려주면 확인한다.
+- **검증 범위**: Palworld v1.0.3 세이브(2026-09), 4인 co-op 월드 1개에서 호스트 2회 이관 + 캐릭터 복원 + 맵 복원까지 실사용했다. 이후 패치(v1.0.4, v1.0.5)에서 문제가 생기면 [Issues](https://github.com/YohanSong/palworld-host-changer/issues)로 알려주면 확인한다.
 - co-op(초대 코드) 월드용이다. 전용 서버(dedicated server) 이관 도구가 아니다.
 - **믿을 수 있는 사람의 세이브만 열 것.** Oodle 해제 라이브러리(ooz)는 악의적으로 조작된 파일에 대한 방어가 없다.
 - 백신의 "보호된 폴더"(랜섬웨어 보호) 안에서는 실행이 막힐 수 있다 → 바탕화면 등으로 옮겨서 실행.
@@ -119,8 +119,8 @@ Features:
 
 Why pals vanish with naive tools: in 1.0 saves a pal's key `PlayerUId` in `CharacterSaveParameterMap` is also `001` (a host-slot sentinel; the real owner is in `OwnerPlayerUId`). Rewriting every `001` breaks every pal key. This tool swaps only entries flagged `IsPlayer`, fixes guild admin/member UIDs and player handles inside `GroupSaveDataMap`, and swaps the player `.sav` files so the internal UID matches the file name. 1.0 saves are Oodle-compressed (`PlM1`); they are decompressed with [ooz](https://github.com/powzix/ooz) and written back as zlib (`PlZ1`), which the game loads fine.
 
-Tested on Palworld v1.0.3 saves (Sep 2026) with a 4-player co-op world: two host changes, a guest restore and a map restore. Swapping host and back is byte-identical to the original (decompressed). Please report problems on newer patches via [Issues](../../issues).
+Tested on Palworld v1.0.3 saves (Sep 2026) with a 4-player co-op world: two host changes, a guest restore and a map restore. Swapping host and back is byte-identical to the original (decompressed). Please report problems on newer patches via [Issues](https://github.com/YohanSong/palworld-host-changer/issues).
 
 Why not a single exe: PyInstaller builds get flagged by Microsoft Defender's ML (`Wacatac!ml`, a false positive), so the release ships the signed runtime + source instead ([VirusTotal](https://www.virustotal.com/gui/file/ef4a1b3199a717c680434406c4a62e379bb0f4c98f9df6a56fc59c7fbc5758b1)).
 
-Download: [Releases](../../releases/latest). License: GPL-3.0-or-later. Unofficial fan tool, not affiliated with Pocketpair.
+Download: [Releases](https://github.com/YohanSong/palworld-host-changer/releases/latest). License: GPL-3.0-or-later. Unofficial fan tool, not affiliated with Pocketpair.
