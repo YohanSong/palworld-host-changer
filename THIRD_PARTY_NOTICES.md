@@ -42,11 +42,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Bundled in the release .exe only
+## Bundled in the release zip
 
-- **Python** runtime — Python Software Foundation License, https://docs.python.org/3/license.html
-- **Tcl/Tk** (tkinter GUI) — Tcl/Tk license (BSD-style), https://www.tcl.tk/software/tcltk/license.html
-- **PyInstaller** bootloader — GPL-2.0 with the PyInstaller bootloader exception, https://github.com/pyinstaller/pyinstaller/blob/develop/COPYING.txt
+- **Python 3.14 runtime** (`runtime\`, unmodified official Windows binaries signed by the Python
+  Software Foundation, standard library as compiled .pyc) — PSF License; the full text, including the
+  licenses of libraries shipped with Python (Tcl/Tk, libffi, zlib, ...), is in `runtime\LICENSE_Python.txt`.
+  https://docs.python.org/3/license.html
+- **Tcl/Tk 8.6** (tkinter GUI) — Tcl/Tk license (BSD-style), https://www.tcl.tk/software/tcltk/license.html
+- **palworld-save-tools** — copied unmodified into `app\palworld_save_tools\` (MIT, see above).
+
+The optional single-exe build (`scripts\build_exe.bat`) additionally uses the **PyInstaller** bootloader —
+GPL-2.0 with the PyInstaller bootloader exception, https://github.com/pyinstaller/pyinstaller/blob/develop/COPYING.txt
 
 ## Prior work
 

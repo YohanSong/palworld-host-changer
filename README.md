@@ -12,8 +12,10 @@
 
 ## 다운로드
 
-[Releases](../../releases/latest)에서 `PalworldHostChanger_v1.0.0.zip` 받아 압축 풀고 `PalworldHostChanger.exe` 실행.
-파이썬 설치 필요 없음.
+[Releases](../../releases/latest)에서 `PalworldHostChanger_v1.0.0.zip` 받아 **압축을 풀고** `PalworldHostChanger.bat` 더블클릭.
+파이썬 설치 필요 없음 — 공식 파이썬 런타임(PSF 서명)이 `runtime\`에 같이 들어있고, `app\`에는 이 도구의 소스(.py)가 그대로 있다.
+
+> exe가 아닌 이유: PyInstaller로 만든 exe는 윈도우 디펜더가 `Trojan:Win32/Wacatac!ml`로 오탐한다. 그래서 서명된 공식 런타임 + 소스 형태로 배포한다. [VirusTotal 검사 결과](https://www.virustotal.com/gui/file/ef4a1b3199a717c680434406c4a62e379bb0f4c98f9df6a56fc59c7fbc5758b1)
 
 ## 이럴 때 쓴다
 
@@ -65,7 +67,7 @@
 - co-op(초대 코드) 월드용이다. 전용 서버(dedicated server) 이관 도구가 아니다.
 - **믿을 수 있는 사람의 세이브만 열 것.** Oodle 해제 라이브러리(ooz)는 악의적으로 조작된 파일에 대한 방어가 없다.
 - 백신의 "보호된 폴더"(랜섬웨어 보호) 안에서는 실행이 막힐 수 있다 → 바탕화면 등으로 옮겨서 실행.
-- 서명 안 된 exe라 SmartScreen 경고가 뜬다 → [추가 정보] → [실행]. 걱정되면 소스에서 직접 실행하거나 빌드하면 된다(아래).
+- 실행할 때 보안 경고가 뜨면 [추가 정보] → [실행]. zip 안에서 바로 실행하지 말고 압축을 푼 뒤 실행할 것.
 
 ## 동작 원리
 
@@ -90,7 +92,8 @@ python src\host_changer_gui.pyw
 ```
 
 - 콘솔판: 월드 폴더를 `scripts\run_console.bat`에 드래그.
-- exe 빌드: `scripts\build_exe.bat` (PyInstaller, 결과물 `dist\PalworldHostChanger.exe`). Python 3.14 / PyInstaller 6.22에서 빌드·테스트함.
+- 배포용 zip 만들기: `python scripts\build_portable.py` (실행 중인 공식 Windows CPython 런타임을 묶는다. Python 3.14.5에서 빌드·테스트함).
+- 단일 exe가 필요하면 `scripts\build_exe.bat` (PyInstaller 6.22) — 단, 백신 오탐이 난다.
 - `src\ooz.dll` 재빌드: `third_party\ooz\build_ooz_dll.bat` (Visual Studio C++ 필요, 원본 소스 무수정).
 
 ## 라이선스 / 크레딧
@@ -107,7 +110,7 @@ Palworld는 Pocketpair, Inc.의 상표다.
 
 ## English
 
-**Palworld Host Changer** swaps the host of a Palworld **co-op (invite code) world**, so someone else can keep hosting it with their own character — for when the original host stops playing or can't open the world. Pals, bases, guilds and items follow the character. Windows GUI, single `.exe`, no Python needed. Saves are backed up automatically.
+**Palworld Host Changer** swaps the host of a Palworld **co-op (invite code) world**, so someone else can keep hosting it with their own character — for when the original host stops playing or can't open the world. Pals, bases, guilds and items follow the character. Windows GUI, portable: unzip and run `PalworldHostChanger.bat` (bundles the official, PSF-signed Python runtime — no install; the app itself ships as plain `.py` source). Saves are backed up automatically.
 
 Features:
 - **Change host** — pick any character from the list and make them the host (internal UID `001`). The old host is parked in the guest slot and can be swapped back.
@@ -117,5 +120,7 @@ Features:
 Why pals vanish with naive tools: in 1.0 saves a pal's key `PlayerUId` in `CharacterSaveParameterMap` is also `001` (a host-slot sentinel; the real owner is in `OwnerPlayerUId`). Rewriting every `001` breaks every pal key. This tool swaps only entries flagged `IsPlayer`, fixes guild admin/member UIDs and player handles inside `GroupSaveDataMap`, and swaps the player `.sav` files so the internal UID matches the file name. 1.0 saves are Oodle-compressed (`PlM1`); they are decompressed with [ooz](https://github.com/powzix/ooz) and written back as zlib (`PlZ1`), which the game loads fine.
 
 Tested on Palworld v1.0.3 saves (Sep 2026) with a 4-player co-op world: two host changes, a guest restore and a map restore. Swapping host and back is byte-identical to the original (decompressed). Please report problems on newer patches via [Issues](../../issues).
+
+Why not a single exe: PyInstaller builds get flagged by Microsoft Defender's ML (`Wacatac!ml`, a false positive), so the release ships the signed runtime + source instead ([VirusTotal](https://www.virustotal.com/gui/file/ef4a1b3199a717c680434406c4a62e379bb0f4c98f9df6a56fc59c7fbc5758b1)).
 
 Download: [Releases](../../releases/latest). License: GPL-3.0-or-later. Unofficial fan tool, not affiliated with Pocketpair.

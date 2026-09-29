@@ -11,3 +11,10 @@ third_party/ooz/*.exp
 third_party/ooz/ooz.dll
 # never commit save files
 *.sav
+dist_portable/
+dist_onedir/
+build_onedir/
+dist_cb_*/
+build_cb_*/
+.venv-build/
+build_venv_log.txt
