@@ -90,7 +90,7 @@ python src\host_changer_gui.pyw
 ```
 
 - 콘솔판: 월드 폴더를 `scripts\run_console.bat`에 드래그.
-- exe 빌드: `scripts\build_exe.bat` (PyInstaller, 결과물 `dist\PalworldHostChanger.exe`).
+- exe 빌드: `scripts\build_exe.bat` (PyInstaller, 결과물 `dist\PalworldHostChanger.exe`). Python 3.14 / PyInstaller 6.22에서 빌드·테스트함.
 - `src\ooz.dll` 재빌드: `third_party\ooz\build_ooz_dll.bat` (Visual Studio C++ 필요, 원본 소스 무수정).
 
 ## 라이선스 / 크레딧
