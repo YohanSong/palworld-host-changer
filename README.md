@@ -3,6 +3,7 @@
 멀티(co-op, 초대 코드)로 하던 월드의 **호스트를 다른 사람으로 바꾸는** Windows 도구.
 친구가 서버(월드)를 못 열어줄 때, 그 월드를 **내 캐릭터로** 이어받을 수 있다.
 캐릭터·팰·거점·길드는 그대로 따라온다. 원본 세이브는 건드리지 않고, 설치할 때는 기존 폴더를 자동 백업한다.
+**정식 출시(1.0) 이후 세이브를 지원한다** — 1.0부터 바뀐 Oodle 압축(`PlM1`) 세이브를 직접 풀어서 처리한다. 예전 호스트 변경 툴이 1.0에서 안 되는 경우에 쓰면 된다.
 
 ![screenshot](docs/screenshot.png)
 
@@ -60,6 +61,29 @@
 
 탐험 시야는 월드 세이브가 아니라 **각자 PC의 `LocalData.sav`** 에 있다.
 많이 탐험한 사람에게 `LocalData.sav`를 받아서 **[🗺 맵 시야 가져오기…]** → 합치기(권장) 또는 덮어쓰기.
+
+## 자주 묻는 질문
+
+**Q. 팰월드 멀티 호스트를 바꿀 수 있나? 친구 월드를 내가 이어서 할 수 있나?**
+된다. 친구에게 월드 폴더를 받아서 이 도구로 내 캐릭터를 호스트로 바꾸면, 내 PC에서 내 캐릭터로 그 월드를 연다.
+
+**Q. 세이브만 복사하면 왜 남의 캐릭터로 들어가나?**
+co-op 월드의 호스트 자리는 항상 UID 001이라서다. 아래 [왜 세이브 복사만으로는 안 되나](#왜-세이브-복사만으로는-안-되나) 참고.
+
+**Q. 정식 출시(1.0) 이후에도 되나? 예전 툴은 안 되던데.**
+된다. 1.0 세이브는 Oodle(`PlM1`)로 압축돼 예전 툴이 못 읽는다. 이 도구는 Palworld v1.0.3 세이브로 검증했다.
+
+**Q. 호스트를 바꾸면 팰·거점·길드가 날아가나?**
+아니다. 팰 키와 길드 데이터까지 같이 보정해서 그대로 따라온다.
+
+**Q. 호스트 바꾼 뒤 친구가 들어오니 캐릭터 생성창이 뜬다.**
+[게스트 캐릭터 복원](#게스트-캐릭터-복원)을 쓴다.
+
+**Q. 호스트 바꾼 뒤 지도가 까맣다.**
+[맵 시야 가져오기](#맵-시야-가져오기)를 쓴다.
+
+**Q. 전용 서버(dedicated server)로 옮기는 툴인가?**
+아니다. co-op(초대 코드) 월드 전용이다.
 
 ## 주의
 
@@ -122,5 +146,12 @@ Why pals vanish with naive tools: in 1.0 saves a pal's key `PlayerUId` in `Chara
 Tested on Palworld v1.0.3 saves (Sep 2026) with a 4-player co-op world: two host changes, a guest restore and a map restore. Swapping host and back is byte-identical to the original (decompressed). Please report problems on newer patches via [Issues](https://github.com/YohanSong/palworld-host-changer/issues).
 
 Why not a single exe: PyInstaller builds get flagged by Microsoft Defender's ML (`Wacatac!ml`, a false positive), so the release ships the signed runtime + source instead ([VirusTotal](https://www.virustotal.com/gui/file/ef4a1b3199a717c680434406c4a62e379bb0f4c98f9df6a56fc59c7fbc5758b1)).
+
+FAQ:
+- *Can I change the host of a Palworld co-op world / continue my friend's world?* Yes — get their world folder, make your character the host, open it on your PC.
+- *Does it work after the 1.0 release?* Yes. 1.0 saves are Oodle-compressed (`PlM1`), which older host-fix tools can't read. Tested on v1.0.3.
+- *Will I lose pals, bases or guild?* No — pal keys and guild data are fixed up too.
+- *Friend gets the character creation screen after the host change?* Use **Restore guest character**.
+- *Is this for dedicated servers?* No, co-op (invite code) worlds only.
 
 Download: [Releases](https://github.com/YohanSong/palworld-host-changer/releases/latest). License: GPL-3.0-or-later. Unofficial fan tool, not affiliated with Pocketpair.
