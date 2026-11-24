@@ -6,7 +6,7 @@
 - 필요 파일: 같은 폴더의 ooz.dll (Oodle Kraken 압축 해제용, third_party/ooz 에서 빌드)
 - 압축 쓰기는 PlZ(zlib) — 게임이 읽고 자기 포맷으로 재발행함 (2026-09-03 실증).
 """
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 import ctypes, os, re, shutil, struct, sys, zlib
 from bisect import bisect_right
@@ -46,12 +46,12 @@ def sav_decompress(path):
         buf = ctypes.create_string_buffer(ulen + 64)  # 디코더 여유 공간
         n = _OOZ.Kraken_Decompress(d[12:], len(d) - 12, buf, ulen)
         if n != ulen:
-            raise RuntimeError(f"{os.path.basename(path)}: Kraken 해제 실패 ({n} != {ulen})")
+            raise RuntimeError(f"{os.path.basename(path)}: Kraken decompression failed ({n} != {ulen})")
         out = buf.raw[:ulen]
     else:
-        raise RuntimeError(f"{os.path.basename(path)}: 알 수 없는 매직 {magic!r}")
+        raise RuntimeError(f"{os.path.basename(path)}: unknown save format {magic!r}")
     if len(out) != ulen:
-        raise RuntimeError(f"{os.path.basename(path)}: 크기 불일치 {len(out)} != {ulen}")
+        raise RuntimeError(f"{os.path.basename(path)}: size mismatch {len(out)} != {ulen}")
     return out
 
 
@@ -271,7 +271,7 @@ def _iter_group_rawdata(d):
                     yield p2, p2 + bc, gtype
                 p = p2 + bc
             else:
-                raise RuntimeError(f"그룹 파싱: 예상 밖 타입 {typ} @{p:#x}")
+                raise RuntimeError(f"guild data: unexpected type {typ} @{p:#x}")
 
 
 def _find_players_block(d, s, e):
@@ -393,7 +393,7 @@ def fix_group_blobs(data, a, b):
                 d[hp:hp+16] = u
                 hfix += 1
         if hfix:
-            did.append(f"플레이어핸들 {hfix}")
+            did.append(f"player handles {hfix}")
 
         # (A) admin/players 꼬리 블록 스왑
         aq, poss = _find_players_block(d, s, e)
@@ -408,9 +408,9 @@ def fix_group_blobs(data, a, b):
                     d[pos:pos+16] = a
                     ab += 1
             if ab:
-                did.append(f"admin/멤버 {ab}")
+                did.append(f"admin/members {ab}")
         else:
-            did.append("!!admin블록 못찾음")
+            did.append("!!admin block not found")
 
         # (B) 이름 문자열(uid hex32) 교환 — 블롭 국한, 크기 불변
         seg = bytearray(d[s:e])
@@ -431,12 +431,12 @@ def fix_group_blobs(data, a, b):
             i += 1
         if nb:
             d[s:e] = seg
-            did.append(f"이름 {nb}")
+            did.append(f"names {nb}")
 
         if did:
             rep.append(f"{gtype.split('::')[-1]}@{s:#x}: " + ", ".join(did))
 
-    return bytes(d), ("; ".join(rep) if rep else "교환 대상 없음")
+    return bytes(d), ("; ".join(rep) if rep else "nothing to swap")
 
 
 # ───────────────────────── 맵 시야(탐색 안개) 이식 ─────────────────────────
@@ -492,7 +492,7 @@ def transplant_map(dst_gvas, src_gvas, merge=False):
     dms = find_map_masks(d)
     sms = find_map_masks(src_gvas)
     if not dms or not sms:
-        raise RuntimeError("MaskTextureData(맵 시야)를 못 찾음 — LocalData.sav 가 맞는지 확인")
+        raise RuntimeError("map data (MaskTextureData) not found — is this a LocalData.sav?")
     rep = []
     used = set()
     for dm in dms:
@@ -500,7 +500,7 @@ def transplant_map(dst_gvas, src_gvas, merge=False):
         cand = next((k for k, sm in enumerate(sms)
                      if k not in used and sm["count"] == dm["count"]), None)
         if cand is None:
-            rep.append(f"{dm['count']:,}B 마스크: 짝 없음(건너뜀)")
+            rep.append(f"{dm['count']:,}B mask: no match (skipped)")
             continue
         used.add(cand)
         sm = sms[cand]
@@ -514,7 +514,7 @@ def transplant_map(dst_gvas, src_gvas, merge=False):
         else:
             d[off:off + n] = src_blob
             after = sum(1 for b in src_blob if b)
-        rep.append(f"{n:,}B 마스크 → 탐험 {after * 100.0 / n:.1f}%")
+        rep.append(f"{n:,}B mask → explored {after * 100.0 / n:.1f}%")
     return bytes(d), ("; ".join(rep))
 
 

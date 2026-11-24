@@ -18,3 +18,5 @@ dist_cb_*/
 build_cb_*/
 .venv-build/
 build_venv_log.txt
+.omc/
+src/lang.txt

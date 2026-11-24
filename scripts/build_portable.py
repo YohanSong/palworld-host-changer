@@ -87,7 +87,7 @@ def main():
     with open(os.path.join(rt, f"python{VER}._pth"), "w", encoding="ascii", newline="\r\n") as fh:
         fh.write(f"python{VER}.zip\n.\n..\\app\n")
 
-    for f in ("host_changer.py", "host_changer_gui.pyw", "ooz.dll"):
+    for f in ("host_changer.py", "host_changer_gui.pyw", "lang.py", "ooz.dll"):
         shutil.copy2(os.path.join(ROOT, "src", f), app)
     import palworld_save_tools
     pst = os.path.dirname(palworld_save_tools.__file__)
@@ -103,7 +103,7 @@ def main():
         s = open(src, encoding="utf-8").read().replace("\r\n", "\n").replace("\n", "\r\n")
         with open(dst, "w", encoding="utf-8-sig", newline="") as fh:
             fh.write(s)
-    text(os.path.join(ROOT, "docs", "README_KR.txt"), os.path.join(OUT_DIR, "README.txt"))
+    text(os.path.join(ROOT, "docs", "README.txt"), os.path.join(OUT_DIR, "README.txt"))
     text(os.path.join(ROOT, "LICENSE"), os.path.join(OUT_DIR, "LICENSE.txt"))
     text(os.path.join(ROOT, "THIRD_PARTY_NOTICES.md"), os.path.join(OUT_DIR, "THIRD_PARTY_NOTICES.txt"))
 
