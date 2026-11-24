@@ -73,6 +73,9 @@ No Python install needed: the official, PSF-signed Python runtime is bundled in 
 **How do I change the host in Palworld co-op?** Use the steps above: the new host's character is moved into the host slot (UID 001).
 **Can I give my co-op world to a friend?** Yes — **Export** with your friend's character selected, send the folder, they put it in their `SaveGames\<number>\`.
 **Why did my pals disappear after moving the save?** Pal keys share the host UID; tools that replace it everywhere lose them. This one doesn't.
+**Does it work after the 1.0 release? Older host-fix tools don't.** Yes — 1.0 saves are Oodle-compressed (`PlM1`), which older tools can't read; this one decompresses them directly. Checked on v1.0.5.
+**My friend gets the character creation screen after the host change.** Use **Restore guest character**.
+**Is this for dedicated servers?** No, co-op (invite code) worlds only.
 **Is the download safe?** Source is in this repo, the release ships the signed Python runtime + `.py` files, and the zip scans clean on VirusTotal. A single PyInstaller `.exe` was dropped because Microsoft Defender falsely flags those (`Wacatac!ml`).
 **Only open saves from people you trust** — the Oodle decoder is not hardened against malicious files.
 
