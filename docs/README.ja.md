@@ -14,6 +14,8 @@
 [**最新リリース**](https://github.com/YohanSong/palworld-host-changer/releases/latest) → `PalworldHostChanger_v<バージョン>.zip` → **展開して** `PalworldHostChanger.bat` をダブルクリック。
 Python のインストールは不要です。`runtime\` に公式の署名付き Python ランタイム、`app\` にそのまま読めるソースコードが入っています。右上の 🌐 で言語を切り替えられます。
 
+Steam ガイド: https://steamcommunity.com/sharedfiles/filedetails/?id=3845113994
+
 ## できること
 
 | 状況 | 機能 |

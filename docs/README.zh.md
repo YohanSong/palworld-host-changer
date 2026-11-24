@@ -14,6 +14,8 @@
 [**最新版本**](https://github.com/YohanSong/palworld-host-changer/releases/latest) → `PalworldHostChanger_v<版本>.zip` → **解压** → 双击 `PalworldHostChanger.bat`。
 无需安装 Python：`runtime\` 内附带官方签名的 Python 运行环境，`app\` 内是可直接阅读的源代码。右上角 🌐 切换语言。
 
+Steam 图文教程: https://steamcommunity.com/sharedfiles/filedetails/?id=3845111756
+
 ## 能解决什么
 
 | 情况 | 功能 |

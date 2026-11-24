@@ -19,6 +19,7 @@ Pals, bases, guilds and items come with you. Free, open source, Windows, no inst
 
 [**Latest release**](https://github.com/YohanSong/palworld-host-changer/releases/latest) → `PalworldHostChanger_v<version>.zip` → unzip → double-click **`PalworldHostChanger.bat`**.
 No Python install needed: the official, PSF-signed Python runtime is bundled in `runtime\`, and the app itself is plain readable source in `app\`.
+Step-by-step Steam guides: [English](https://steamcommunity.com/sharedfiles/filedetails/?id=3810358786) · [简体中文](https://steamcommunity.com/sharedfiles/filedetails/?id=3845111756) · [日本語](https://steamcommunity.com/sharedfiles/filedetails/?id=3845113994)
 
 ## What it fixes
 
